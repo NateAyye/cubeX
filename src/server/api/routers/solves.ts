@@ -1,3 +1,4 @@
+import { eq } from "drizzle-orm";
 import { z } from "zod";
 
 import {
@@ -25,13 +26,15 @@ export const solvesRouter = createTRPCRouter({
       });
     }),
 
+  delete: protectedProcedure
+    .input(z.number())
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.delete(cubeSessions).where(eq(cubeSessions.id, input));
+    }),
+
   getLatest: publicProcedure.query(({ ctx }) => {
     return ctx.db.query.cubeSessions.findFirst({
       orderBy: (cubeSessions, { desc }) => [desc(cubeSessions.createdAt)],
     });
-  }),
-
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
   }),
 });

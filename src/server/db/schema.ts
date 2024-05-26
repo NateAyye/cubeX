@@ -13,6 +13,23 @@ import {
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
+export const CUBING_EVENTS = [
+  "3x3x3",
+  "2x2x2",
+  "4x4x4",
+  "5x5x5",
+  "6x6x6",
+  "7x7x7",
+  "Pyraminx",
+  "Megaminx",
+  "Square-1",
+  "Skewb",
+  "Clock",
+  "3x3x3 BF",
+] as const;
+
+export type CubingEvents = (typeof CUBING_EVENTS)[number];
+
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
  * database instance for multiple projects.
@@ -26,6 +43,9 @@ export const cubeSessions = createTable(
   {
     id: serial("id").primaryKey(),
     name: varchar("name", { length: 255 }),
+    cubingEvent: varchar("cubingEvent", { length: 255 })
+      .$type<CubingEvents>()
+      .default("3x3x3"),
     userId: varchar("userId", { length: 255 })
       .notNull()
       .references(() => users.id),
@@ -59,7 +79,7 @@ export const solves = createTable(
     comment: varchar("comment", { length: 255 }),
     reconstruction: text("reconstruction"),
     dnf: boolean("dnf").default(false),
-    plusTwo: boolean("plusTwo").default(false),
+    plusTwos: integer("plusTwo").default(0),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
