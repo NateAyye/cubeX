@@ -86,7 +86,7 @@ export const solves = createTable(
     updatedAt: timestamp("updatedAt", { withTimezone: true }),
   },
   (table) => ({
-    sessionIdx: index("user_idx").on(table.cubeSessionId),
+    sessionIdx: index("session_idx").on(table.cubeSessionId),
   }),
 );
 
