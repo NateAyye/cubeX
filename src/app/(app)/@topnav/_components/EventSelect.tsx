@@ -16,7 +16,7 @@ const EventSelect: React.FC = () => {
       onValueChange={(value) => setEvent(value as CubingEvents)}
       value={event}
     >
-      <SelectTrigger className={"w-min gap-3"}>
+      <SelectTrigger className={"h-min w-min gap-3"}>
         <SelectValue defaultValue={event} />
       </SelectTrigger>
       <SelectContent>
