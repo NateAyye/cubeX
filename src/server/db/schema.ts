@@ -12,23 +12,7 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
-
-export const CUBING_EVENTS = [
-  "3x3x3",
-  "2x2x2",
-  "4x4x4",
-  "5x5x5",
-  "6x6x6",
-  "7x7x7",
-  "Pyraminx",
-  "Megaminx",
-  "Square-1",
-  "Skewb",
-  "Clock",
-  "3x3x3 BF",
-] as const;
-
-export type CubingEvents = (typeof CUBING_EVENTS)[number];
+import { type CubingEvents } from "~/types";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -101,7 +85,7 @@ export const users = createTable("user", {
   id: varchar("id", { length: 255 }).notNull().primaryKey(),
   name: varchar("name", { length: 255 }),
   email: varchar("email", { length: 255 }).notNull(),
-  currentSessionId: varchar("currentSessionId", { length: 255 }),
+  currentSessionId: integer("currentSessionId"),
   emailVerified: timestamp("emailVerified", {
     mode: "date",
     withTimezone: true,

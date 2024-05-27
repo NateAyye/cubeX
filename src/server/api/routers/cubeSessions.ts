@@ -5,23 +5,48 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
-import { CUBING_EVENTS, cubeSessions } from "~/server/db/schema";
+import { cubeSessions } from "~/server/db/schema";
+import { CUBING_EVENTS } from "~/types";
 
 export const cubeSessionRouter = createTRPCRouter({
-  create: protectedProcedure
-    .input(z.object({ name: z.string().min(1), event: z.enum(CUBING_EVENTS) }))
+  create: publicProcedure
+    .input(
+      z.object({
+        name: z.string().min(1),
+        event: z.enum(CUBING_EVENTS),
+        userId: z.string(),
+      }),
+    )
     .mutation(async ({ ctx, input }) => {
       // simulate a slow db call
       // await new Promise((resolve) => setTimeout(resolve, 1000));
-      await ctx.db.insert(cubeSessions).values({
-        name: input.name,
-        userId: ctx.session.user.id,
-      });
+      const newSession = await ctx.db
+        .insert(cubeSessions)
+        .values({
+          name: input.name,
+          userId: input.userId,
+          cubingEvent: input.event,
+        })
+        .returning();
+      return newSession;
     }),
 
-  getLatest: publicProcedure.query(({ ctx }) => {
+  getCurrentSession: protectedProcedure.query(({ ctx }) => {
     return ctx.db.query.cubeSessions.findFirst({
-      orderBy: (cubeSessions, { desc }) => [desc(cubeSessions.createdAt)],
+      where: (session, { eq }) => eq(session.userId, ctx.session.user.id),
+      orderBy: (session, { desc }) => [desc(session.createdAt)],
+    });
+  }),
+  getUserSessions: protectedProcedure.query(({ ctx }) => {
+    return ctx.db.query.cubeSessions.findMany({
+      where: (sessions, { eq }) => eq(sessions.userId, ctx.session.user.id),
+      orderBy: (sessions, { desc }) => [desc(sessions.createdAt)],
+    });
+  }),
+
+  getLatest: protectedProcedure.query(({ ctx }) => {
+    return ctx.db.query.cubeSessions.findFirst({
+      orderBy: (session, { desc }) => [desc(session.createdAt)],
     });
   }),
 });

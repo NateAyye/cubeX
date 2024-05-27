@@ -1,5 +1,7 @@
 import { cubeSessionRouter } from "~/server/api/routers/cubeSessions";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
+import { solvesRouter } from "./routers/solves";
+import { usersRouter } from "./routers/users";
 
 /**
  * This is the primary router for your server.
@@ -8,6 +10,8 @@ import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   cubeSessions: cubeSessionRouter,
+  solves: solvesRouter,
+  users: usersRouter,
 });
 
 // export type definition of API

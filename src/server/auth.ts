@@ -1,4 +1,5 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { eq } from "drizzle-orm";
 import {
   getServerSession,
   type DefaultSession,
@@ -11,7 +12,7 @@ import GoogleProvider from "next-auth/providers/google";
 
 import { env } from "~/env";
 import { db } from "~/server/db";
-import { createTable } from "~/server/db/schema";
+import { createTable, cubeSessions, users } from "~/server/db/schema";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -25,6 +26,7 @@ declare module "next-auth" {
       id: string;
       // ...other properties
       // role: UserRole;
+      currentSessionId?: number;
     } & DefaultSession["user"];
   }
 
@@ -41,11 +43,15 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user }) => {
+    session: async ({ session, user }) => {
+      const currentSessionId = await db.query.users.findFirst({
+        where: eq(users.id, user.id),
+      });
       return {
         ...session,
         user: {
           ...session.user,
+          currentSessionId: currentSessionId?.currentSessionId,
           id: user.id,
         },
       };
@@ -75,6 +81,25 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
+  events: {
+    async createUser(message) {
+      const firstCubeSession = await db
+        .insert(cubeSessions)
+        .values({
+          name: "3x3x3",
+          cubingEvent: "3x3x3",
+          userId: message.user.id,
+        })
+        .returning();
+
+      await db
+        .update(users)
+        .set({
+          currentSessionId: firstCubeSession[0]!.id,
+        })
+        .where(eq(users.id, message.user.id));
+    },
+  },
 };
 
 /**
