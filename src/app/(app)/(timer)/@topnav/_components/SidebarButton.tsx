@@ -2,7 +2,7 @@
 import { Menu } from "lucide-react";
 import React from "react";
 import { Button } from "~/components/ui/button";
-import { setSidebarState } from "~/store/features/appState/appStateSlice";
+import { setSidebarState } from "~/store/features/timer/timerSlice";
 import { useAppDispatch } from "~/store/hooks";
 
 const SidebarButton: React.FC = ({}) => {

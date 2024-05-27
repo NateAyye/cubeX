@@ -1,17 +1,15 @@
-
 export const CUBING_EVENTS = [
-  "3x3x3",
-  "2x2x2",
-  "4x4x4",
-  "5x5x5",
-  "6x6x6",
-  "7x7x7",
-  "Pyraminx",
-  "Megaminx",
+  "2x2",
+  "3x3",
+  "4x4",
+  "5x5",
+  "6x6",
+  "7x7",
   "Square-1",
-  "Skewb",
+  "Pyraminx",
   "Clock",
-  "3x3x3 BF",
+  "Skewb",
+  "Megaminx",
 ] as const;
 
 export type CubingEvents = (typeof CUBING_EVENTS)[number];

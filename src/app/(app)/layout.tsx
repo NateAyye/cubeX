@@ -10,7 +10,6 @@ interface MainAppLayoutProps {
 
 const MainAppLayout: React.FC<MainAppLayoutProps> = async ({
   children,
-  topnav,
   sidebar,
 }) => {
   const session = await getServerAuthSession();
@@ -23,10 +22,7 @@ const MainAppLayout: React.FC<MainAppLayoutProps> = async ({
   return (
     <div className="flex">
       {sidebar}
-      <div className="flex-1">
-        {topnav}
-        {children}
-      </div>
+      <div className="flex min-h-dvh flex-1 flex-col">{children}</div>
     </div>
   );
 };

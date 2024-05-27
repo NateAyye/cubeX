@@ -86,8 +86,8 @@ export const authOptions: NextAuthOptions = {
       const firstCubeSession = await db
         .insert(cubeSessions)
         .values({
-          name: "3x3x3",
-          cubingEvent: "3x3x3",
+          name: "3x3",
+          cubingEvent: "3x3",
           userId: message.user.id,
         })
         .returning();

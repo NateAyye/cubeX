@@ -1,15 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { appStateSlice } from './features/appState/appStateSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import { timerSlice } from "./features/timer/timerSlice";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      appState: appStateSlice.reducer,
+      timer: timerSlice.reducer,
     },
   });
-}
+};
 
 export type AppStore = ReturnType<typeof makeStore>;
 
-export type RootState = ReturnType<AppStore['getState']>;
-export type AppDispatch = AppStore['dispatch'];
+export type RootState = ReturnType<AppStore["getState"]>;
+export type AppDispatch = AppStore["dispatch"];

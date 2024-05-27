@@ -30,23 +30,10 @@ export const cubeSessionRouter = createTRPCRouter({
         .returning();
       return newSession;
     }),
-
-  getCurrentSession: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.query.cubeSessions.findFirst({
-      where: (session, { eq }) => eq(session.userId, ctx.session.user.id),
-      orderBy: (session, { desc }) => [desc(session.createdAt)],
-    });
-  }),
   getUserSessions: protectedProcedure.query(({ ctx }) => {
     return ctx.db.query.cubeSessions.findMany({
       where: (sessions, { eq }) => eq(sessions.userId, ctx.session.user.id),
       orderBy: (sessions, { desc }) => [desc(sessions.createdAt)],
-    });
-  }),
-
-  getLatest: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.query.cubeSessions.findFirst({
-      orderBy: (session, { desc }) => [desc(session.createdAt)],
     });
   }),
 });

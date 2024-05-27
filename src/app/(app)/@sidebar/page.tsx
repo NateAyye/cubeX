@@ -4,13 +4,13 @@ import Image from "next/image";
 import React from "react";
 import { Sheet, SheetContent, SheetHeader } from "~/components/ui/sheet";
 import { useMediaQuery } from "~/hooks/use-media-query";
-import { setSidebarState } from "~/store/features/appState/appStateSlice";
+import { setSidebarState } from "~/store/features/timer/timerSlice";
 import { useAppDispatch, useAppSelector } from "~/store/hooks";
 import SidebarLinks from "./_components/sidebar-links";
 
 const Sidebar: React.FC = ({}) => {
   const isMobile = useMediaQuery("(max-width: 640px)");
-  const sidebarOpen = useAppSelector((state) => state.appState.sidebarOpen);
+  const sidebarOpen = useAppSelector((state) => state.timer.sidebarOpen);
   const dispatch = useAppDispatch();
 
   if (isMobile) {

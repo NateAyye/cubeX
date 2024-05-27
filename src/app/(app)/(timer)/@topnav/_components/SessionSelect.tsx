@@ -44,7 +44,6 @@ const SessionSelect: React.FC<SessionSelectProps> = ({ currentSessionId }) => {
     (session) => session.id === currentSessionId,
   );
 
-
   return (
     <Select
       onValueChange={(value) => setCurrentSessionState(value)}
@@ -57,17 +56,14 @@ const SessionSelect: React.FC<SessionSelectProps> = ({ currentSessionId }) => {
         />
       </SelectTrigger>
       <SelectContent>
-        {cubingSessions?.length ? (
-          cubingSessions.map((session) => (
-            <SelectItem key={session.id} value={session.id + ""}>
-              {session.name}
-            </SelectItem>
-          ))
-        ) : (
-          <Button variant="outline" className="w-full">
-            New Session
-          </Button>
-        )}
+        {cubingSessions.map((session) => (
+          <SelectItem key={session.id} value={session.id + ""}>
+            {session.name}
+          </SelectItem>
+        ))}
+        <Button variant="ghost" className="w-full h-min">
+          New Session +
+        </Button>
       </SelectContent>
     </Select>
   );
