@@ -29,7 +29,7 @@ export const cubeSessions = createTable(
     name: varchar("name", { length: 255 }),
     cubingEvent: varchar("cubingEvent", { length: 255 })
       .$type<CubingEvents>()
-      .default("3x3x3"),
+      .default("3x3"),
     userId: varchar("userId", { length: 255 })
       .notNull()
       .references(() => users.id),
