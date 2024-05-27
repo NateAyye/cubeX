@@ -93,7 +93,7 @@ const Timer: React.FC = ({}) => {
           ref={scrambleRef}
           contentEditable={editingScramble}
           className={cn(
-            " text-muted-foreground text-2xl rounded px-5 text-center",
+            " rounded px-5 text-center text-2xl text-muted-foreground",
             editingScramble ? "border-2 border-yellow-500" : "",
           )}
         >

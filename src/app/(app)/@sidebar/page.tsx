@@ -40,7 +40,7 @@ const Sidebar: React.FC = ({}) => {
   }
 
   return (
-    <aside className="min-h-dvh w-auto bg-black/70 px-3 shadow-xl lg:w-[240px]">
+    <aside className="min-h-dvh w-auto bg-[color-mix(in_srgb,_hsl(var(--background))_95%,_gray)] px-3 shadow-xl lg:w-[240px]">
       <div className="l:flex-col flex items-center  justify-between py-3 sm:flex-col sm:gap-7 sm:py-6  lg:flex-row">
         <Image
           src="https://cdn.cubedesk.io/static/images/cube_desk_logo_white.svg"
