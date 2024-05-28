@@ -5,7 +5,10 @@ interface TimerLayoutProps {
   topnav?: React.ReactNode;
 }
 
-const TimerLayout: React.FC<TimerLayoutProps> = ({ children, topnav }) => {
+const TimerLayout: React.FC<TimerLayoutProps> = async ({
+  children,
+  topnav,
+}) => {
   return (
     <>
       {topnav}

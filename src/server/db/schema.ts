@@ -61,6 +61,10 @@ export const solves = createTable(
     scramble: varchar("scramble", { length: 255 }).notNull(),
     tags: json("tags").$type<string[]>().default([]),
     comment: varchar("comment", { length: 255 }),
+    ao5: integer("ao5").notNull(),
+    cubingEvent: varchar("cubingEvent", { length: 255 })
+      .$type<CubingEvents>()
+      .default("3x3"),
     reconstruction: text("reconstruction"),
     dnf: boolean("dnf").default(false),
     plusTwos: integer("plusTwo").default(0),

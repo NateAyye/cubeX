@@ -19,6 +19,8 @@ const MainAppLayout: React.FC<MainAppLayoutProps> = async ({
     redirect("/home");
   }
 
+  
+
   return (
     <div className="flex">
       {sidebar}

@@ -61,7 +61,7 @@ const SessionSelect: React.FC<SessionSelectProps> = ({ currentSessionId }) => {
             {session.name}
           </SelectItem>
         ))}
-        <Button variant="ghost" className="w-full h-min">
+        <Button variant="ghost" className="h-min w-full">
           New Session +
         </Button>
       </SelectContent>

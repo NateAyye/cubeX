@@ -13,7 +13,7 @@ type CuberStatus = "READY" | "HOLDING" | "STOPPED" | "SOLVING";
 const HOLDING_TIME = 500;
 
 const Timer: React.FC = ({}) => {
-  const scramble = useAppSelector((state) => state.timer.scramble);
+  const { scramble } = useAppSelector((state) => state.timer);
   const dispatch = useAppDispatch();
 
   const { hours, minutes, seconds, miliseconds, play, pause, reset } =
