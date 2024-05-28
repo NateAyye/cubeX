@@ -24,7 +24,7 @@ const Timer: React.FC = ({}) => {
       utils.solves.getCurrentSessionSolves.setData(
         undefined,
         (old: (typeof solves.$inferSelect)[] | undefined) =>
-          [...old, newSolve] as (typeof solves.$inferSelect)[],
+          [...(old as []), newSolve] as (typeof solves.$inferSelect)[],
       );
 
       // Return the previous data so we can revert if something goes wrong

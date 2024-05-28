@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { convertToTimeString } from "~/lib/utils";
 
 import { type solves } from "~/server/db/schema";
 import { api } from "~/trpc/react";
@@ -30,12 +31,15 @@ const StatsDisplay: React.FC<StatsDisplayProps> = ({}) => {
     return best;
   }, Infinity);
 
-  const ao5 = solves.reduce((ao5, solve, i) => {
-    if (i < 5) {
-      return ao5 + solve.time;
-    }
-    return ao5;
-  }, 0);
+  const ao5 =
+    solves.length > 4
+      ? solves.reduce((ao5, solve, i) => {
+          if (i < 5) {
+            return ao5 + solve.time;
+          }
+          return ao5;
+        }, 0) / 5
+      : 0;
 
   // the best average of five for the current session
   const ao5pb = solves.reduce((ao5pb, solve) => {
@@ -63,33 +67,33 @@ const StatsDisplay: React.FC<StatsDisplayProps> = ({}) => {
           {bestSolve
             ? !isFinite(bestSolve)
               ? "N/A"
-              : Math.floor(bestSolve / 100)
+              : convertToTimeString(bestSolve)
             : ""}
         </span>
       </div>
       <div className="relative col-start-1 col-end-3 row-start-3 row-end-4 rounded border px-2">
         Worst:
         <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          {!!worstSolve ? (worstSolve / 100).toFixed(2) : "N/A"}
+          {!!worstSolve ? convertToTimeString(worstSolve) : "N/A"}
         </span>
       </div>
       <div className="relative col-span-2 rounded border px-2">
         avg:
         <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          {!!avg ? (avg / 100).toFixed(2) : "N/A"}
+          {!!avg ? convertToTimeString(avg) : "N/A"}
         </span>
       </div>
 
       <div className=" relative col-span-2 rounded border px-2">
         Ao5:
         <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          {!!ao5 ? (ao5 / 100).toFixed(2) : "N/A"}
+          {!!ao5 ? convertToTimeString(ao5) : "N/A"}
         </span>
       </div>
       <div className="relative col-span-2 rounded border px-2">
         Ao5pb:
         <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          {ao5pb ? (!isFinite(ao5pb) ? "N/A" : (ao5pb / 100).toFixed(2)) : ""}
+          {ao5pb ? (!isFinite(ao5pb) ? "N/A" : convertToTimeString(ao5pb)) : ""}
         </span>
       </div>
     </div>
